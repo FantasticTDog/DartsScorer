@@ -1,4 +1,3 @@
-
 let player1 = {
     name: 'Player One',
     currentGoal: 0,
@@ -46,6 +45,9 @@ let arrayRound = []
 let dart = 0
 let maxRounds = 2;
 
+//multiplies number hiz with this factor
+let factor = 1
+
 //variable to deactivate functions of number-buttons when game is over
 let gameIsActive = false
 
@@ -64,7 +66,6 @@ function createPlayer() {
         document.querySelector(".playerName").value = "";
         noOfActivePlayers ++;
     } else {alert("Game allows for max of 4 Players!")}
-
 }
 
 function startGame() {
@@ -81,18 +82,59 @@ function startGame() {
 
 const buttons = document.querySelectorAll('.number');
 
+//main function from which all other functions are triggered
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
         if (gameIsActive == true){
-            addPoints(button);
-            checkRound()
-        }
+            //the following function checks if double or triple  button have been pressed. If so, following two functions are not executed
+            if (accountForSpecials(button) == false) {
+                addPoints(button);
+                checkRound()
+                normalizeNumbers()
+                factor = 1
+            } 
+        } else {alert("Start game first!")}
     })
 })
 
+function accountForSpecials(button) {
+    if (button.className == "number special") {
+        if (button.id == "Double") {
+            factor = 2
+            multiplyNumbers("D");
+            console.log("Doppel")
+            return true
+        } else if (button.id == "Triple") {
+            factor = 3
+            multiplyNumbers("T");
+            console.log("Triple")
+            return true
+        } else {return false}
+    } else {return false}
+}
+
+function multiplyNumbers(factor) {
+    buttons.forEach(button => {
+        if (button.className != "number special") {
+            button.textContent = factor + button.id
+        }
+    })
+}
+
+function normalizeNumbers() {
+    buttons.forEach(button => {
+        if (button.className != "number special") {
+            button.textContent = button.id
+        }
+    })
+}
+
 function addPoints(button) {
-    //store pushed button content in the array at position 0, 1 or 2
-    arrayRound[dart] = Math.floor(button.textContent)
+        //store pushed button content in the array at position 0, 1 or 2
+        //multiply button content (=button id) with factor, except if it is a special number (=bull/bullseye)
+    if (button.className == "number special") {
+        arrayRound[dart] = Math.floor(button.id)
+    } else {arrayRound[dart] = Math.floor(button.id) * factor}
     activePlayer.currentScore += arrayRound[dart];
     console.log(activePlayer.name + ': ' + activePlayer.currentScore);
     //next dart

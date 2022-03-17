@@ -19,29 +19,30 @@ body {
     background-color: #CF3525;
 }
 
-.content {
-    background-color: #019240;
-    display: flex;
-    justify-content: space-around;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    flex: 1 0 auto;
-}
-
 .inputs {
     display: flex;
     justify-content: space-around;
     padding-top: 20px;
     padding-bottom: 20px;;
 }
+.content {
+    background-color: #019240;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    column-gap: 20px;
+}
 
 .scoreboard{
-    width: 30%;
+    flex: 1;
     background-color: rgba(241, 235, 235, 0.849);
 }
 
+.inputContainer {
+    flex: 2;
+}
+
 .input{
-    width: 60%;
     display: flex;
     flex-wrap: wrap;
     row-gap: 10px;
@@ -49,13 +50,22 @@ body {
 
 }
 
+.specials {
+    display: flex;
+    justify-content: space-between;
+}
+
+.specials .number {
+    width: 200px;
+}
+
 .players {
     padding: 20px 0;
 }
 
 .number{
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     background-color: #FFFFFF;
     border: 1px solid #222222;
     border-radius: 8px;
